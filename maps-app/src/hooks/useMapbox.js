@@ -4,13 +4,7 @@ import mapboxgl from "mapbox-gl";
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYnVqb3NhIiwiYSI6ImNra25ldzBlZDEzdnYydnBkZXNob2Q1a3cifQ.VQsp-0l_cbGfhyGnLnJigA";
 
-const initialPoint = {
-  lng: -69.8417,
-  lat: 18.5195,
-  zoom: 17.01,
-};
-
-export const useMapbox = () => {
+export const useMapbox = (initialPoint) => {
   const mapDiv = useRef();
   const setRef = useCallback((node) => {
     mapDiv.current = node;
@@ -27,7 +21,7 @@ export const useMapbox = () => {
       zoom: initialPoint.zoom,
     });
     map.current = mapbox;
-  }, []);
+  }, [initialPoint]);
 
   useEffect(() => {
     map.current?.on("move", () => {
