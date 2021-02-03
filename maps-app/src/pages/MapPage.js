@@ -1,9 +1,9 @@
 import React from "react";
 
-import { usesMapbox } from "../hooks/usesMapbox";
+import { useMapbox } from "../hooks/useMapbox";
 
 export const MapPage = () => {
-  const { coords, setRef } = usesMapbox();
+  const { coords, setRef } = useMapbox();
   return (
     <>
       <div className="info">

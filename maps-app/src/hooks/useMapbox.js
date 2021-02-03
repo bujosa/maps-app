@@ -10,9 +10,8 @@ const initialPoint = {
   zoom: 17.01,
 };
 
-export const usesMapbox = () => {
+export const useMapbox = () => {
   const mapDiv = useRef();
-
   const setRef = useCallback((node) => {
     mapDiv.current = node;
   }, []);
