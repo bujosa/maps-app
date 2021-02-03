@@ -24,12 +24,6 @@ class Server {
     this.app.use(express.static(path.resolve(__dirname, "../public")));
 
     this.app.use(cors());
-
-    this.app.get("/last", (req, res) => {
-      res.json({
-        last: this.sockets.ticketList.lastThirteen,
-      });
-    });
   }
 
   execute() {
