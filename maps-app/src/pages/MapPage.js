@@ -12,8 +12,7 @@ const initialPoint = {
 
 export const MapPage = () => {
   const mapDiv = useRef();
-
-  const [map, setMap] = useState();
+  const map = useRef();
   const [coords, setCoords] = useState(initialPoint);
 
   useEffect(() => {
@@ -23,20 +22,20 @@ export const MapPage = () => {
       center: [initialPoint.lng, initialPoint.lat],
       zoom: initialPoint.zoom,
     });
-    setMap(mapbox);
+    map.current = mapbox;
   }, []);
 
   useEffect(() => {
-    map?.on("move", () => {
-      const { lng, lat } = map.getCenter();
+    map.current?.on("move", () => {
+      const { lng, lat } = map.current.getCenter();
       setCoords({
         lng: lng.toFixed(4),
         lat: lat.toFixed(4),
-        zoom: map.getZoom().toFixed(2),
+        zoom: map.current.getZoom().toFixed(2),
       });
     });
-    return map?.off("move");
-  }, [map]);
+    return map.current?.off("move");
+  }, []);
 
   return (
     <>
