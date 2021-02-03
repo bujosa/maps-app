@@ -1,5 +1,5 @@
 import React from "react";
 
-export const MapaPage = () => {
+export const MapPage = () => {
   return <div>Hola Mundo</div>;
 };

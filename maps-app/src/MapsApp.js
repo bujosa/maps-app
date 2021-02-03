@@ -1,6 +1,6 @@
 import React from "react";
-import { MapaPage } from "./pages/MapaPage";
+import { MapPage } from "./pages/MapPage";
 
 export const MapsApp = () => {
-  return <MapaPage />;
+  return <MapPage />;
 };
