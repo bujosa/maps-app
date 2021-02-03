@@ -13,7 +13,8 @@ const initialPoint = {
 export const MapPage = () => {
   const mapDiv = useRef();
 
-  const [, setMap] = useState();
+  const [map, setMap] = useState();
+  const [coords, setCoords] = useState(initialPoint);
 
   useEffect(() => {
     const mapbox = new mapboxgl.Map({
@@ -27,6 +28,9 @@ export const MapPage = () => {
 
   return (
     <>
+      <div className="info">
+        Lng: {coords.lng} | lat: {coords.lat} | zoom: {coords.zoom}
+      </div>
       <div ref={mapDiv} className="mapContainer" />
     </>
   );
