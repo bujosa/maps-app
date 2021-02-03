@@ -10,7 +10,13 @@ class Sockets {
   socketEvents() {
     // On connection
     this.io.on("connection", (socket) => {
-      this.socket.on("marker-online");
+      socket.emit("markers", this.markers.onlines);
+      socket.on("new-marker", (marker) => {
+        this.markers.addMarker(marker);
+      });
+      socket.on("update-marker", (marker) => {
+        this.markers.updateMarker(marker);
+      });
     });
   }
 }
