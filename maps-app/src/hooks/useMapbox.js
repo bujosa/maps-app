@@ -14,7 +14,7 @@ export const useMapbox = (initialPoint) => {
 
   const markers = useRef({});
 
-  // const markerMovement;
+  const markerMovement = useRef(new Subject());
   const newMarker = useRef(new Subject());
 
   const map = useRef();
@@ -28,11 +28,20 @@ export const useMapbox = (initialPoint) => {
 
     markers.current[marker.id] = marker;
 
-    newMarker.current.next(marker);
+    newMarker.current.next({
+      id: marker.id,
+      lat,
+      lng,
+    });
 
     marker.on("drag", ({ target }) => {
       const { id } = target;
       const { lng, lat } = target.getLngLat();
+      markerMovement.current.next({
+        id,
+        lng,
+        lat,
+      });
     });
   }, []);
 
@@ -68,5 +77,7 @@ export const useMapbox = (initialPoint) => {
     setRef,
     markers,
     addMarker,
+    markerMovement$: markerMovement.current,
+    newMarker$: newMarker.current,
   };
 };
