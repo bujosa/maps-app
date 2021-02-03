@@ -20,19 +20,21 @@ export const useMapbox = (initialPoint) => {
   const map = useRef();
   const [coords, setCoords] = useState(initialPoint);
 
-  const addMarker = useCallback((ev) => {
-    const { lng, lat } = ev.lngLat;
+  const addMarker = useCallback((ev, id) => {
+    const { lng, lat } = ev.lngLat || ev;
     const marker = new mapboxgl.Marker();
-    marker.id = v4();
+    marker.id = id ?? v4();
     marker.setLngLat([lng, lat]).addTo(map.current).setDraggable(true);
 
     markers.current[marker.id] = marker;
 
-    newMarker.current.next({
-      id: marker.id,
-      lat,
-      lng,
-    });
+    if (!id) {
+      newMarker.current.next({
+        id: marker.id,
+        lat,
+        lng,
+      });
+    }
 
     marker.on("drag", ({ target }) => {
       const { id } = target;
