@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import mapboxgl from "mapbox-gl";
 import { v4 } from "uuid";
+import { Subject } from "rxjs";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYnVqb3NhIiwiYSI6ImNra25ldzBlZDEzdnYydnBkZXNob2Q1a3cifQ.VQsp-0l_cbGfhyGnLnJigA";
@@ -13,6 +14,9 @@ export const useMapbox = (initialPoint) => {
 
   const markers = useRef({});
 
+  // const markerMovement;
+  const newMarker = useRef(new Subject());
+
   const map = useRef();
   const [coords, setCoords] = useState(initialPoint);
 
@@ -23,6 +27,13 @@ export const useMapbox = (initialPoint) => {
     marker.setLngLat([lng, lat]).addTo(map.current).setDraggable(true);
 
     markers.current[marker.id] = marker;
+
+    newMarker.current.next(marker);
+
+    marker.on("drag", ({ target }) => {
+      const { id } = target;
+      const { lng, lat } = target.getLngLat();
+    });
   }, []);
 
   useEffect(() => {
@@ -56,5 +67,6 @@ export const useMapbox = (initialPoint) => {
     coords,
     setRef,
     markers,
+    addMarker,
   };
 };
